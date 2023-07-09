@@ -34,7 +34,6 @@ SELECT vk.f_del_user(5);
 /* 2.Предыдущую задачу решить с помощью процедуры и 
  обернуть используемые команды в транзакцию внутри процедуры. */
 DROP PROCEDURE IF EXISTS vk.p_del_user;
-
 DELIMITER //
 CREATE PROCEDURE vk.p_del_user(IN id_user BIGINT UNSIGNED, OUT result BIGINT UNSIGNED)
  BEGIN
@@ -72,6 +71,7 @@ SELECT @status;
 /* 3.Написать триггер, который проверяет новое появляющееся сообщество. 
 Длина названия сообщества (поле name) должна быть не менее 5 символов. 
 Если требование не выполнено, то выбрасывать исключение с пояснением. */
+DROP TRIGGER IF EXISTS vk.t_check_community_name;
 DELIMITER //
 CREATE TRIGGER vk.t_check_community_name BEFORE INSERT ON communities
  FOR EACH ROW
@@ -82,5 +82,5 @@ CREATE TRIGGER vk.t_check_community_name BEFORE INSERT ON communities
  END //
 DELIMITER ;
 
-INSERT INTO communities (name) VALUES ('VeryLongName1');
+INSERT INTO communities (name) VALUES ('VeryLongName');
 INSERT INTO communities (name) VALUES ('shot');
